@@ -3,7 +3,7 @@
  * Distributed under the Myo SDK license agreement. See LICENSE.txt for details.
  */
 
-package com.thalmic.android.sample.helloworld;
+package com.phantpower.phantpower;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thalmic.android.sample.helloworld.R;
 import com.thalmic.myo.AbstractDeviceListener;
 import com.thalmic.myo.Arm;
 import com.thalmic.myo.DeviceListener;
@@ -172,7 +173,7 @@ public class HelloWorldActivity extends Activity {
 
         mLockStateView = (TextView) findViewById(R.id.lock_state);
         mTextView = (TextView) findViewById(R.id.text);
-        yo = new Yo("5420f64d-af6f-4d33-a0c2-6f1d2cd14fbe"); // Api Key
+        yo = new Yo(<apitoken>,"IFTTT"); // Api Key
         
         // First, we initialize the Hub singleton with an application identifier.
         Hub hub = Hub.getInstance();

@@ -1,4 +1,4 @@
-package com.thalmic.android.sample.helloworld;
+package com.phantpower.phantpower;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -13,9 +13,10 @@ import android.util.Log;
 public class Yo {
 	private static String server = "https://api.justyo.co/yo/";
 	private static String apikey;
-	
-	public Yo(String apikey) {
+	private static String recipient;
+	public Yo(String apikey, String recipient) {
 		this.apikey = apikey;
+		this.recipient = recipient;
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
 		StrictMode.setThreadPolicy(policy); 
@@ -27,7 +28,7 @@ public class Yo {
 		
 		con.setRequestMethod("POST");
 
-		String urlParameters = "api_token="+apikey+"&username=THEBLNAKNESS";
+		String urlParameters = "api_token="+apikey+"&username="+recipient;
 
 		con.setDoOutput(true);
 		DataOutputStream wr = new DataOutputStream(con.getOutputStream());

@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="httpclient-cache-4.3.4.jar"/>
 	<classpathentry kind="lib" path="httpcore-4.3.2.jar"/>
 	<classpathentry kind="lib" path="httpmime-4.3.4.jar"/>
+	<classpathentry kind="lib" path="/MyoSdk/libs/myosdk.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
