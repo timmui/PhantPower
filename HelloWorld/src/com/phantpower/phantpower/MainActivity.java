@@ -169,11 +169,11 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hello_world);
+        setContentView(R.layout.main_activity);
 
         mLockStateView = (TextView) findViewById(R.id.lock_state);
         mTextView = (TextView) findViewById(R.id.text);
-        yo = new Yo(<API Key>,"IFTTT"); // Api Key
+        yo = new Yo(Credentials.yoApiKey,"IFTTT"); // Api Key
         
         // First, we initialize the Hub singleton with an application identifier.
         Hub hub = Hub.getInstance();
