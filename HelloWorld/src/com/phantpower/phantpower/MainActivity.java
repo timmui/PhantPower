@@ -131,6 +131,7 @@ public class MainActivity extends Activity {
                 case FIST:
                     mTextView.setText(getString(R.string.pose_fist));
 					throwYo();
+					myo.notifyUserAction();
                     break;
                 case WAVE_IN:
                     mTextView.setText(getString(R.string.pose_wavein));
