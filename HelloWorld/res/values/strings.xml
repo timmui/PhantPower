@@ -14,5 +14,6 @@
     <string name="unlocked">Unlocked</string>
     <string name="locked">Locked</string>
     <string name="myo_message">Please connect Myo</string>
+    <string name="toggleSwitch">On/Off</string>
 
 </resources>

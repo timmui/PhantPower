@@ -166,8 +166,7 @@ public class MainActivity extends Activity {
 
         mLockStateView = (TextView) findViewById(R.id.lock_state);
         mTextView = (TextView) findViewById(R.id.text);
-        yo = new Yo(Credentials.yoApiKey,"IFTTT"
-        		+ "]'"); // Api Key
+        yo = new Yo(Credentials.yoApiKey,"IFTTT"); // Api Key
         
         // First, we initialize the Hub singleton with an application identifier.
         Hub hub = Hub.getInstance();
@@ -180,6 +179,17 @@ public class MainActivity extends Activity {
 
         // Next, register for DeviceListener callbacks.
         hub.addListener(mListener);
+        
+        Button toggle = (Button) findViewById (R.id.button1);
+        toggle.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				throwYo();
+			}
+        	
+        });
     }
 
     @Override
