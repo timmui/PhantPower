@@ -32,7 +32,7 @@ import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.XDirection;
 import com.thalmic.myo.scanner.ScanActivity;
 
-public class HelloWorldActivity extends Activity {
+public class MainActivity extends Activity {
 	
     private TextView mLockStateView;
     private TextView mTextView;
@@ -173,7 +173,7 @@ public class HelloWorldActivity extends Activity {
 
         mLockStateView = (TextView) findViewById(R.id.lock_state);
         mTextView = (TextView) findViewById(R.id.text);
-        yo = new Yo(<apitoken>,"IFTTT"); // Api Key
+        yo = new Yo(<APIKEY>,"IFTTT"); // Api Key
         
         // First, we initialize the Hub singleton with an application identifier.
         Hub hub = Hub.getInstance();
