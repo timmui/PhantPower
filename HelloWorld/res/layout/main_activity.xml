@@ -9,20 +9,20 @@
     <TextView
         android:id="@+id/lock_state"
         android:text="@string/locked"
-        android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_gravity="top|center_horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_gravity="top|start"
         tools:ignore="SpUsage"/>
 
     <TextView
         android:id="@+id/text"
-        android:text="@string/hello_world"
-        android:textSize="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        tools:ignore="SpUsage"/>
+        android:layout_marginTop="10dp"
+        android:layout_gravity="top|center_horizontal"
+        android:text="@string/myo_message"
+        tools:ignore="SpUsage" />
 
 </FrameLayout>

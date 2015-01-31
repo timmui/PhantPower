@@ -30,6 +30,7 @@ int string arm_left 0x7f06000e
 int string arm_right 0x7f06000f
 int string hello_world 0x7f060007
 int string locked 0x7f060011
+int string myo_message 0x7f060012
 int string myosdk__action_scan 0x7f060001
 int string myosdk__action_stop_scan 0x7f060002
 int string myosdk__firmware_required_format 0x7f060005
