@@ -173,7 +173,7 @@ public class MainActivity extends Activity {
 
         mLockStateView = (TextView) findViewById(R.id.lock_state);
         mTextView = (TextView) findViewById(R.id.text);
-        yo = new Yo(<APIKEY>,"IFTTT"); // Api Key
+        yo = new Yo(<API Key>,"IFTTT"); // Api Key
         
         // First, we initialize the Hub singleton with an application identifier.
         Hub hub = Hub.getInstance();
