@@ -113,31 +113,24 @@ public class MainActivity extends Activity {
             // based on the pose we receive.
             switch (pose) {
                 case UNKNOWN:
-                    mTextView.setText(getString(R.string.hello_world));
+                    mTextView.setText(getString(R.string.myo_message));
                     break;
                 case REST:
                 case DOUBLE_TAP:
-                    int restTextId = R.string.hello_world;
+                    String restText = "At Rest";
                     switch (myo.getArm()) {
                         case LEFT:
-                            restTextId = R.string.arm_left;
+                            restText = getString(R.string.arm_left);
                             break;
                         case RIGHT:
-                            restTextId = R.string.arm_right;
+                            restText = getString(R.string.arm_right);
                             break;
                     }
-                    mTextView.setText(getString(restTextId));
+                    mTextView.setText(restText);
                     break;
                 case FIST:
                     mTextView.setText(getString(R.string.pose_fist));
-					try {
-						Log.d("YO","Run Fist");
-						yo.sendYo();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						Log.d("YO","exception");
-						e.printStackTrace();
-					}
+					throwYo();
                     break;
                 case WAVE_IN:
                     mTextView.setText(getString(R.string.pose_wavein));
@@ -173,7 +166,8 @@ public class MainActivity extends Activity {
 
         mLockStateView = (TextView) findViewById(R.id.lock_state);
         mTextView = (TextView) findViewById(R.id.text);
-        yo = new Yo(Credentials.yoApiKey,"IFTTT"); // Api Key
+        yo = new Yo(Credentials.yoApiKey,"IFTTT"
+        		+ "]'"); // Api Key
         
         // First, we initialize the Hub singleton with an application identifier.
         Hub hub = Hub.getInstance();
@@ -223,5 +217,21 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, ScanActivity.class);
         startActivity(intent);
     }
-    
+    private void throwYo(){
+    	int duration = Toast.LENGTH_SHORT;
+    	try {
+			Log.d("YO","Run Fist");
+			yo.sendYo();
+
+			Toast toast = Toast.makeText(getApplicationContext(), "Message Sent", duration);
+			toast.show();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Toast toast = Toast.makeText(getApplicationContext(), "Error: Please Try Again", duration);
+			toast.show();
+			Log.d("YO","exception");
+			e.printStackTrace();
+		}
+    }
 }

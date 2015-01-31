@@ -11,17 +11,17 @@
         android:text="@string/locked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginStart="10dp"
-        android:layout_gravity="top|start"
+        android:layout_gravity="bottom|start"
         tools:ignore="SpUsage"/>
 
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="top|center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="bottom|center_horizontal"
         android:text="@string/myo_message"
         tools:ignore="SpUsage" />
 

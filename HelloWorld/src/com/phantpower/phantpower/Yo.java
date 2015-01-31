@@ -16,7 +16,7 @@ public class Yo {
 	private static String recipient;
 	public Yo(String apikey, String recipient) {
 		this.apikey = apikey;
-		this.recipient = recipient;
+		this.recipient = recipient.toUpperCase();
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
 		StrictMode.setThreadPolicy(policy); 
