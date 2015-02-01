@@ -38,6 +38,7 @@ public class MainActivity extends Activity {
     private TextView mTextView;
     private SparkRest spark;
     private TextView statusText;
+    private Button restToggle;
 
     // Classes that inherit from AbstractDeviceListener can be used to receive events from Myo devices.
     // If you do not override an event, the default behavior is to do nothing.
@@ -173,7 +174,6 @@ public class MainActivity extends Activity {
         statusText = (TextView) findViewById(R.id.textView2);
         spark = new SparkRest();
         
-        getStatus();
         // First, we initialize the Hub singleton with an application identifier.
         Hub hub = Hub.getInstance();
         if (!hub.init(this, getPackageName())) {
@@ -186,7 +186,7 @@ public class MainActivity extends Activity {
         // Next, register for DeviceListener callbacks.
         hub.addListener(mListener);
         
-        Button restToggle = (Button) findViewById (R.id.button1);
+        restToggle = (Button) findViewById (R.id.button1);
         restToggle.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -197,27 +197,8 @@ public class MainActivity extends Activity {
         	
         });
         
-        Button bOn = (Button) findViewById (R.id.button2);
-        bOn.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				throwOn();
-			}
-        	
-        });
+        getStatus();
         
-        Button bOff = (Button) findViewById (R.id.button3);
-        bOff.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				throwOff();
-			}
-        	
-        });
     }
 
     @Override
@@ -354,9 +335,11 @@ public class MainActivity extends Activity {
 			
 			if (result == 0){
 				statusText.setText("Off");
+				restToggle.setText ("Turn On");
 			}
 			else if (result == 1){
 				statusText.setText("On");
+				restToggle.setText ("Turn On");
 			}
 			
 			return result;
