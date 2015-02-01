@@ -1,7 +1,7 @@
 # PhantPower
 <h2>Smart IoT Power Outlet</h2>
 
-PhantPower is a smart outlet that removes all phantom power from charging smartphones, tablets and laptops. The outlet can also be turned on or off from anywhere in the world using a Pebble, Myo, Android device, or computer. 
+PhantPower is a smart outlet that removes all phantom power that results from charging smartphones, tablets and laptops. Phantom power results from the standby power when devices are left plugged in when not being used and/or charged. We believe in saving energy one PhantPower at a time! The outlet can also be turned on or off from anywhere in the world using a Pebble, Myo, Android device, or computer. However, our technology has broad applications in home automation and assistive technologies. People with disabilities can use our device to safely control outlets.
 
 Each app is in their own respective branch.
 
