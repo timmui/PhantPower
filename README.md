@@ -8,3 +8,5 @@ Each app is in their own respective branch.
 PhantPower uses a Sparkcore and a Sparkcore relay shield to control the outlet. The apps for the Myo and the pebble were built for android (java, xml). The pebble application was built in cloudpebble (c), and the desktop app was built with python. All communications between devices are done through REST.
 
 Fun fact, PhantPower can be controlled with Yo! and IFTTT.
+
+PhantPower was built by Tim Mui, Akshay Parelkar, Evelyn Sham, Alex Wen
