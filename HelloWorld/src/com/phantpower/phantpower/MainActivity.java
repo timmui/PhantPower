@@ -36,7 +36,8 @@ public class MainActivity extends Activity {
 	
     private TextView mLockStateView;
     private TextView mTextView;
-    private Yo yo;
+    private SparkRest spark;
+    private TextView statusText;
 
     // Classes that inherit from AbstractDeviceListener can be used to receive events from Myo devices.
     // If you do not override an event, the default behavior is to do nothing.
@@ -45,8 +46,8 @@ public class MainActivity extends Activity {
         // onConnect() is called whenever a Myo has been connected.
         @Override
         public void onConnect(Myo myo, long timestamp) {
-            // Set the text color of the text view to cyan when a Myo connects.
-            mTextView.setTextColor(Color.CYAN);
+            // Set the text color of the text view to Green when a Myo connects.
+            mTextView.setTextColor(Color.GREEN);
         }
 
         // onDisconnect() is called whenever a Myo has been disconnected.
@@ -68,7 +69,7 @@ public class MainActivity extends Activity {
         // when Myo is moved around on the arm.
         @Override
         public void onArmUnsync(Myo myo, long timestamp) {
-            mTextView.setText(R.string.hello_world);
+            mTextView.setText(R.string.myo_message);
         }
 
         // onUnlock() is called whenever a synced Myo has been unlocked. Under the standard locking
@@ -130,7 +131,7 @@ public class MainActivity extends Activity {
                     break;
                 case FIST:
                     mTextView.setText(getString(R.string.pose_fist));
-					throwYo();
+					throwOff();
 					myo.notifyUserAction();
                     break;
                 case WAVE_IN:
@@ -141,6 +142,8 @@ public class MainActivity extends Activity {
                     break;
                 case FINGERS_SPREAD:
                     mTextView.setText(getString(R.string.pose_fingersspread));
+                    throwOn();
+					myo.notifyUserAction();
                     break;
             }
 
@@ -167,8 +170,10 @@ public class MainActivity extends Activity {
 
         mLockStateView = (TextView) findViewById(R.id.lock_state);
         mTextView = (TextView) findViewById(R.id.text);
-        yo = new Yo(Credentials.yoApiKey,"IFTTT"); // Api Key
+        statusText = (TextView) findViewById(R.id.textView2);
+        spark = new SparkRest();
         
+        getStatus();
         // First, we initialize the Hub singleton with an application identifier.
         Hub hub = Hub.getInstance();
         if (!hub.init(this, getPackageName())) {
@@ -181,13 +186,35 @@ public class MainActivity extends Activity {
         // Next, register for DeviceListener callbacks.
         hub.addListener(mListener);
         
-        Button toggle = (Button) findViewById (R.id.button1);
-        toggle.setOnClickListener(new OnClickListener(){
+        Button restToggle = (Button) findViewById (R.id.button1);
+        restToggle.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				throwYo();
+				throwToggle();
+			}
+        	
+        });
+        
+        Button bOn = (Button) findViewById (R.id.button2);
+        bOn.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				throwOn();
+			}
+        	
+        });
+        
+        Button bOff = (Button) findViewById (R.id.button3);
+        bOff.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				throwOff();
 			}
         	
         });
@@ -228,21 +255,118 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, ScanActivity.class);
         startActivity(intent);
     }
-    private void throwYo(){
+    
+    private void throwToggle(){
     	int duration = Toast.LENGTH_SHORT;
+    	int result;
+    	Toast toast;
+    	
     	try {
-			Log.d("YO","Run Fist");
-			yo.sendYo();
-
-			Toast toast = Toast.makeText(getApplicationContext(), "Message Sent", duration);
-			toast.show();
+			Log.d("REST","Run Toggle");
 			
+			result = spark.sendToggle();
+			
+			if (result == 0){
+				toast = Toast.makeText(getApplicationContext(), "Unsuccessful. Please Try Again.", duration);
+				toast.show();
+			}
+			else if (result == 1){
+				toast = Toast.makeText(getApplicationContext(), "Success!", duration);
+				toast.show();
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			toast = Toast.makeText(getApplicationContext(), "Error: Please Try Again", duration);
+			toast.show();
+			Log.d("REST",String.format("REST exception: %s",e));
+			e.printStackTrace();
+		}
+    	
+    	getStatus ();
+    }
+    private void throwOn(){
+    	int duration = Toast.LENGTH_SHORT;
+    	int result;
+    	Toast toast;
+    	
+    	try {
+			Log.d("REST","Run Toggle");
+			
+			result = spark.sendOn();
+			
+			if (result == 0){
+				toast = Toast.makeText(getApplicationContext(), "Unsuccessful. Please Try Again.", duration);
+				toast.show();
+			}
+			else if (result == 1){
+				toast = Toast.makeText(getApplicationContext(), "Success!", duration);
+				toast.show();
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			toast = Toast.makeText(getApplicationContext(), "Error: Please Try Again", duration);
+			toast.show();
+			Log.d("REST",String.format("REST exception: %s",e));
+			e.printStackTrace();
+		}
+    	
+    	getStatus ();
+    }
+    private void throwOff(){
+    	int duration = Toast.LENGTH_SHORT;
+    	int result;
+    	Toast toast;
+    	
+    	try {
+			Log.d("REST","Run Toggle");
+			
+			result = spark.sendOff();
+			
+			if (result == 0){
+				toast = Toast.makeText(getApplicationContext(), "Unsuccessful. Please Try Again.", duration);
+				toast.show();
+			}
+			else if (result == 1){
+				toast = Toast.makeText(getApplicationContext(), "Success!", duration);
+				toast.show();
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			toast = Toast.makeText(getApplicationContext(), "Error: Please Try Again", duration);
+			toast.show();
+			Log.d("REST",String.format("REST exception: %s",e));
+			e.printStackTrace();
+		}
+    	
+    	getStatus ();
+    }
+    private int getStatus(){
+    	int duration = Toast.LENGTH_SHORT;
+    	int result;
+    	
+    	try {
+			Log.d("REST","Run Toggle");
+			
+			result = spark.getStatus();
+			
+			if (result == 0){
+				statusText.setText("Off");
+			}
+			else if (result == 1){
+				statusText.setText("On");
+			}
+			
+			return result;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Toast toast = Toast.makeText(getApplicationContext(), "Error: Please Try Again", duration);
 			toast.show();
-			Log.d("YO","exception");
+			Log.d("REST",String.format("REST exception: %s",e));
 			e.printStackTrace();
+			return -1;
 		}
     }
 }
