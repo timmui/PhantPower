@@ -9,22 +9,29 @@ import java.util.UUID;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getpebble.android.kit.PebbleKit;
 import com.getpebble.android.kit.PebbleKit.PebbleDataReceiver;
 import com.getpebble.android.kit.util.PebbleDictionary;
+import com.phantpower.phantpower.R;
 
 public class MainActivity extends Activity {
 	
@@ -34,7 +41,7 @@ public class MainActivity extends Activity {
 	
 	private static final int
 		KEY_BUTTON = 0,
-		//KEY_VIBRATE = 1,
+		KEY_VIBRATE = 1,
 		BUTTON_UP = 0,
 		BUTTON_SELECT = 1,
 		BUTTON_DOWN = 2;
@@ -42,12 +49,55 @@ public class MainActivity extends Activity {
 	private Handler handler = new Handler();
 	private PebbleDataReceiver appMessageReciever;
 	private TextView whichButtonView;
-
+	private TextView batteryInfo;
+	private TextView bound;
+	private ImageView imageBatteryState;
+	
+	NumberPicker np;
+	NumberPicker np1;
+	
+	int up = 90;
+	int down = 80;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		np = (NumberPicker) findViewById(R.id.numPick);
+		np1 = (NumberPicker) findViewById(R.id.numPick1);
 		
+		np.setMinValue(0);
+        np.setMaxValue(100);
+        np.setWrapSelectorWheel(true); 
+        
+        np1.setMinValue(0);
+        np1.setMaxValue(100);
+        np1.setWrapSelectorWheel(true); 
+        
+		bound = (TextView) findViewById(R.id.bounds);
+		bound.setText(String.format("%d - %d",down,up));
+        
+        //Add the confirm button
+        Button confirmButton = (Button)findViewById(R.id.pick);
+		confirmButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				down = np.getValue();
+				up = np1.getValue();
+				bound.setText(String.format("%d - %d",down,up));
+				
+			}
+			
+		});
+        
+		
+		
+        batteryInfo=(TextView)findViewById(R.id.textViewBatteryInfo);
+        this.registerReceiver(this.batteryInfoReceiver,	new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        
 		// Customize ActionBar
 		ActionBar actionBar = getActionBar();
 		actionBar.setTitle("PhantPower");
@@ -65,24 +115,47 @@ public class MainActivity extends Activity {
 			}
 			
 		});
-		/*
-		// Add vibrate Button behavior
-		Button vibrateButton = (Button)findViewById(R.id.button_vibrate);
-		vibrateButton.setOnClickListener(new OnClickListener() {
+		// Add output TextView behavior
+		yo = new Yo(Credentials.yoApiKey,"IFTTT");
+		
+		
+	}
+	
+	
+	
+	private BroadcastReceiver batteryInfoReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
 			
-			@Override
-			public void onClick(View v) {
-				// Send KEY_VIBRATE to Pebble
-				PebbleDictionary out = new PebbleDictionary();
-				out.addInt32(KEY_VIBRATE, 0);
-				PebbleKit.sendDataToPebble(getApplicationContext(), WATCHAPP_UUID, out);
+			int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL,0);
+			int  plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED,0);
+			
+			
+			if (level > up && plugged > 0 )
+			{
+				throwYo();
+			}
+			else if (level < down && plugged == 0)
+			{
+				throwYo();
+			}
+			else if (plugged == 0)
+			{
+				throwYo();
 			}
 			
-		});
-		*/
-		// Add output TextView behavior
-		whichButtonView = (TextView)findViewById(R.id.which_button);
-		yo = new Yo(Credentials.yoApiKey,"THEBLNAKNESS");
+			//higher
+			
+			batteryInfo.setText("Level: "+level+"\n"+
+								"Plugged: "+plugged);
+		}
+	};
+	
+	public void vib() {
+		// Send KEY_VIBRATE to Pebble
+		PebbleDictionary out = new PebbleDictionary();
+		out.addInt32(KEY_VIBRATE, 0);
+		PebbleKit.sendDataToPebble(getApplicationContext(), WATCHAPP_UUID, out);
 	}
 	
 	@Override
@@ -111,7 +184,7 @@ public class MainActivity extends Activity {
 								switch(button) {
 								default:
 									throwYo();
-									whichButtonView.setText("Thrown Yo");
+									
 									break;
 								}
 							}
@@ -168,8 +241,9 @@ public class MainActivity extends Activity {
     	try {
 			Log.d("YO","Run Fist");
 			yo.sendYo();
-
+			vib();
 			Toast toast = Toast.makeText(getApplicationContext(), "Message Sent", duration);
+			
 			toast.show();
 			
 		} catch (Exception e) {
