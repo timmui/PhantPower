@@ -9,4 +9,4 @@ PhantPower uses a Sparkcore and a Sparkcore relay shield to control the outlet. 
 
 Fun fact, PhantPower can be controlled with Yo! and IFTTT.
 
-PhantPower was built by Tim Mui, Akshay Parelkar, Evelyn Sham, Alex Wen
+PhantPower was built by Tim Mui, Akshay Parelkar, Evelyn Sham, Alex Wen at UofT Hacks 2015.
