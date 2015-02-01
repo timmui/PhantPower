@@ -17,5 +17,6 @@
     <string name="toggleSwitch">On/Off</string>
     <string name="restButton">Send Rest Toggle</string>
     <string name="MyoStatus">Myo Status</string>
+    <string name="refresh">Refresh</string>
 
 </resources>

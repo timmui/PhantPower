@@ -196,6 +196,16 @@ public class MainActivity extends Activity {
 			}
         	
         });
+        Button refresh = (Button) findViewById (R.id.button2);
+        refresh.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				getStatus();
+			}
+        	
+        });
         
         getStatus();
         
