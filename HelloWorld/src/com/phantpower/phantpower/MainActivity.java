@@ -339,7 +339,7 @@ public class MainActivity extends Activity {
 			}
 			else if (result == 1){
 				statusText.setText("On");
-				restToggle.setText ("Turn On");
+				restToggle.setText ("Turn Off");
 			}
 			
 			return result;
