@@ -1,8 +1,7 @@
 /*
- * Copyright (C) 2014 Thalmic Labs Inc.
- * Distributed under the Myo SDK license agreement. See LICENSE.txt for details.
+ * Attribution:
+ * Built from HelloWorld demo from Thalmic Labs Copyright 2014
  */
-
 package com.phantpower.phantpower;
 
 import android.app.Activity;
@@ -13,10 +12,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +26,7 @@ import com.thalmic.myo.Hub;
 import com.thalmic.myo.Myo;
 import com.thalmic.myo.Pose;
 import com.thalmic.myo.Quaternion;
+import com.thalmic.myo.Vector3;
 import com.thalmic.myo.XDirection;
 import com.thalmic.myo.scanner.ScanActivity;
 
@@ -39,11 +37,12 @@ public class MainActivity extends Activity {
     private SparkRest spark;
     private TextView statusText;
     private Button restToggle;
+    private Yo yo;
 
     // Classes that inherit from AbstractDeviceListener can be used to receive events from Myo devices.
     // If you do not override an event, the default behavior is to do nothing.
     private DeviceListener mListener = new AbstractDeviceListener() {
-
+    	long initialTime = 0;
         // onConnect() is called whenever a Myo has been connected.
         @Override
         public void onConnect(Myo myo, long timestamp) {
@@ -106,6 +105,28 @@ public class MainActivity extends Activity {
             //mTextView.setRotation(roll);
             //mTextView.setRotationX(pitch);
            // mTextView.setRotationY(yaw);
+        }
+        
+        // onOrientationData() is called whenever a Myo provides its current orientation,
+        // represented as a quaternion.
+        @Override
+        public void onAccelerometerData(Myo myo, long timestamp, Vector3 vect) {
+        	if (initialTime == 0){
+        		initialTime = timestamp;
+        	}
+        	
+            double abs = Math.abs(Math.sqrt(Math.pow(vect.x(),2)+Math.pow(vect.y(),2)+Math.pow(vect.z(),2)));
+            
+            Log.d("REST", " "+abs);
+            
+            if (abs <= 1){
+            	if (timestamp-initialTime >= (15*Math.pow(10, 6))){
+            		throwYo();
+            	}
+            }
+            else{
+            	initialTime = timestamp;
+            }
         }
 
         // onPose() is called whenever a Myo provides a new pose.
@@ -173,6 +194,7 @@ public class MainActivity extends Activity {
         mTextView = (TextView) findViewById(R.id.text);
         statusText = (TextView) findViewById(R.id.textView2);
         spark = new SparkRest();
+        yo = new Yo (Credentials.yoApiKey,"ALEXANDERWEN");
         
         // First, we initialize the Hub singleton with an application identifier.
         Hub hub = Hub.getInstance();
@@ -344,11 +366,11 @@ public class MainActivity extends Activity {
 			result = spark.getStatus();
 			
 			if (result == 0){
-				statusText.setText("Off");
+				statusText.setText("The outlet is currently\nOff");
 				restToggle.setText ("Turn On");
 			}
 			else if (result == 1){
-				statusText.setText("On");
+				statusText.setText("The outlet is currently\nOn");
 				restToggle.setText ("Turn Off");
 			}
 			
@@ -362,4 +384,21 @@ public class MainActivity extends Activity {
 			return -1;
 		}
     }
+    private void throwYo(){
+		int duration = Toast.LENGTH_SHORT;
+		try {
+			Log.d("YO","Run Fist");
+			yo.sendYo();
+		
+			Toast toast = Toast.makeText(getApplicationContext(), "Message Sent", duration);
+			toast.show();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Toast toast = Toast.makeText(getApplicationContext(), "Error: Please Try Again", duration);
+			toast.show();
+			Log.d("YO","exception");
+			e.printStackTrace();
+		}
+	}
 }

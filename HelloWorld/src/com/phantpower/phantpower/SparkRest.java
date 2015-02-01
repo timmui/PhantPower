@@ -6,7 +6,6 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import android.R.integer;
 import android.os.StrictMode;
 
 public class SparkRest {

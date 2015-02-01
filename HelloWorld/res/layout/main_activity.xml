@@ -3,26 +3,29 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context="com.phantpower.phantpower.MainActivity"
-    tools:ignore="MergeRootFrame">
+    tools:ignore="MergeRootFrame" >
 
     <TextView
         android:id="@+id/lock_state"
-        android:text="@string/locked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
         android:layout_marginBottom="10dp"
         android:layout_marginStart="10dp"
-        android:layout_gravity="bottom|start"
-        tools:ignore="SpUsage"/>
+        android:text="@string/locked"
+        android:textColor="#000000"
+        tools:ignore="SpUsage" />
 
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="10dp"
         android:text="@string/myo_message"
+        android:textColor="#000000"
         tools:ignore="SpUsage" />
 
     <Button
@@ -30,33 +33,58 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|center_horizontal"
-        android:text="@string/toggleSwitch" />
+        android:background="#ff4700"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="20dp"
+        android:minWidth="200dp"
+        android:text="@string/toggleSwitch"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
         android:layout_marginBottom="30dp"
         android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:paddingStart = "10dp"
+        android:paddingEnd = "10dp"
+        android:background="#333333"
+        android:text="@string/MyoStatus"
+        android:textColor="#ffffff"
         android:textSize="20sp"
-        android:layout_gravity="bottom|start"
-        android:text="@string/MyoStatus" />
+        android:textStyle="bold"
+        android:typeface="sans" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
+        android:gravity="center"
         android:layout_marginTop="30dp"
+        android:textColor="#000000"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
+		
+    
     <Button
         android:id="@+id/button2"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
-        android:layout_marginTop="60dp"
-        android:text="@string/refresh" />
+        android:layout_marginTop="90dp"
+        android:background="#ff4700"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="20dp"
+        android:minWidth="200dp"
+        android:text="@string/refresh"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:typeface="sans" 
+        android:textStyle="bold"/>
 
 </FrameLayout>

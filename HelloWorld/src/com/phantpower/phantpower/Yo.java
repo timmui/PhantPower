@@ -8,15 +8,14 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 import android.os.StrictMode;
-import android.util.Log;
 
 public class Yo {
 	private static String server = "https://api.justyo.co/yo/";
 	private static String apikey;
 	private static String recipient;
 	public Yo(String apikey, String recipient) {
-		this.apikey = apikey;
-		this.recipient = recipient.toUpperCase();
+		Yo.apikey = apikey;
+		Yo.recipient = recipient.toUpperCase();
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
 		StrictMode.setThreadPolicy(policy); 
