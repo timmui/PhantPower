@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,10 +40,30 @@ public class MainActivity extends Activity {
     private Button restToggle;
     private Yo yo;
 
+    //code for checkbox
+    boolean checked = false;
+    
+    private CheckBox chk;
+    public void addListenerOnChkIos() {
+    	 
+    	chk = (CheckBox) findViewById(R.id.checkbox);
+     
+    	chk.setOnClickListener(new OnClickListener() {
+     
+    	  @Override
+    	  public void onClick(View v) {
+                    //is chkIos checked?
+    		checked = !((CheckBox) v).isChecked();
+     
+    	  }
+    	});
+     
+      }
+    
     // Classes that inherit from AbstractDeviceListener can be used to receive events from Myo devices.
     // If you do not override an event, the default behavior is to do nothing.
     private DeviceListener mListener = new AbstractDeviceListener() {
-    	long initialTime = 0;
+    	long initialTime = -1;
         // onConnect() is called whenever a Myo has been connected.
         @Override
         public void onConnect(Myo myo, long timestamp) {
@@ -111,7 +132,7 @@ public class MainActivity extends Activity {
         // represented as a quaternion.
         @Override
         public void onAccelerometerData(Myo myo, long timestamp, Vector3 vect) {
-        	if (initialTime == 0){
+        	if (initialTime == -1){
         		initialTime = timestamp;
         	}
         	
@@ -119,9 +140,11 @@ public class MainActivity extends Activity {
             
             Log.d("REST", " "+abs);
             
-            if (abs <= 1){
-            	if (timestamp-initialTime >= (15*Math.pow(10, 6))){
+            if (abs <= 1.05){
+            	if (timestamp-initialTime >= (Math.pow(10, 4)) && !checked){
             		throwYo();
+            		myo.notifyUserAction();
+            		
             	}
             }
             else{
@@ -195,6 +218,9 @@ public class MainActivity extends Activity {
         statusText = (TextView) findViewById(R.id.textView2);
         spark = new SparkRest();
         yo = new Yo (Credentials.yoApiKey,"ALEXANDERWEN");
+        
+        //this is the code for the checkbox
+        addListenerOnChkIos();
         
         // First, we initialize the Hub singleton with an application identifier.
         Hub hub = Hub.getInstance();
