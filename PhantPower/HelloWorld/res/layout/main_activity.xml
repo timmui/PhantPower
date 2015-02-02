@@ -1,0 +1,53 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.phantpower.phantpower.MainActivity"
+    tools:ignore="MergeRootFrame">
+
+    <TextView
+        android:id="@+id/lock_state"
+        android:text="@string/locked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_gravity="bottom|start"
+        tools:ignore="SpUsage"/>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:text="@string/myo_message"
+        tools:ignore="SpUsage" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_horizontal"
+        android:text="@string/toggleSwitch" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
+        android:layout_gravity="bottom|start"
+        android:text="@string/MyoStatus" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="30dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</FrameLayout>
