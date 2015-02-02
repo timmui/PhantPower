@@ -37,7 +37,6 @@ public class MainActivity extends Activity {
 	
 	private static final UUID WATCHAPP_UUID = UUID.fromString("6092637b-8f58-4199-94d8-c606b1e45040");
 	private static final String WATCHAPP_FILENAME = "android-example.pbw";
-	private Yo yo;
 	
 	private static final int
 		KEY_BUTTON = 0,
@@ -52,7 +51,7 @@ public class MainActivity extends Activity {
 	private TextView batteryInfo;
 	private TextView bound;
 	private ImageView imageBatteryState;
-	
+	private SparkRest spark;
 	NumberPicker np;
 	NumberPicker np1;
 	
@@ -63,6 +62,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		spark = new SparkRest();
 
 		np = (NumberPicker) findViewById(R.id.numPick);
 		np1 = (NumberPicker) findViewById(R.id.numPick1);
@@ -85,10 +86,18 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				
-				down = np.getValue();
-				up = np1.getValue();
-				bound.setText(String.format("%d - %d",down,up));
+				if (np1.getValue() > np.getValue())
+				{
+					down = np.getValue();
+					up = np1.getValue();
 				
+					bound.setText(String.format("%d - %d",down,up));
+				}
+				else
+				{
+					Toast toast = Toast.makeText(getApplicationContext(), "Invalid Entry!", Toast.LENGTH_SHORT);
+					toast.show();
+				}
 			}
 			
 		});
@@ -116,7 +125,6 @@ public class MainActivity extends Activity {
 			
 		});
 		// Add output TextView behavior
-		yo = new Yo(Credentials.yoApiKey,"IFTTT");
 		
 		
 	}
@@ -131,17 +139,13 @@ public class MainActivity extends Activity {
 			int  plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED,0);
 			
 			
-			if (level > up && plugged > 0 )
+			if (level > up && plugged > 0)
 			{
-				throwYo();
+				throwOff();
 			}
-			else if (level < down && plugged == 0)
+			if (level < down)
 			{
-				throwYo();
-			}
-			else if (plugged == 0)
-			{
-				throwYo();
+				throwOn();
 			}
 			
 			//higher
@@ -182,8 +186,24 @@ public class MainActivity extends Activity {
 							@Override
 							public void run() {
 								switch(button) {
+								case BUTTON_UP:
+									
+									throwOn();
+									
+									break;
+								case BUTTON_SELECT:
+									
+									throwToggle();
+									
+									break;
+								case BUTTON_DOWN:
+									
+									throwOff();
+									
+									break;
 								default:
-									throwYo();
+									
+									throwToggle();
 									
 									break;
 								}
@@ -236,22 +256,91 @@ public class MainActivity extends Activity {
         }
     }
     
-    private void throwYo(){
+    //throwstuff here
+
+    private void throwToggle(){
     	int duration = Toast.LENGTH_SHORT;
+    	int result;
+    	Toast toast;
+    	
     	try {
-			Log.d("YO","Run Fist");
-			yo.sendYo();
-			vib();
-			Toast toast = Toast.makeText(getApplicationContext(), "Message Sent", duration);
+			Log.d("REST","Run Toggle");
 			
-			toast.show();
+			result = spark.sendToggle();
+			
+			if (result == 0){
+				toast = Toast.makeText(getApplicationContext(), "Unsuccessful. Please Try Again.", duration);
+				toast.show();
+			}
+			else if (result == 1){
+				toast = Toast.makeText(getApplicationContext(), "Success!", duration);
+				toast.show();
+			}
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			Toast toast = Toast.makeText(getApplicationContext(), "Error: Please Try Again", duration);
+			toast = Toast.makeText(getApplicationContext(), "Error: Please Try Again", duration);
 			toast.show();
-			Log.d("YO","exception");
+			Log.d("REST",String.format("REST exception: %s",e));
 			e.printStackTrace();
 		}
+    	
+    	
+    }
+    private void throwOn(){
+    	int duration = Toast.LENGTH_SHORT;
+    	int result;
+    	Toast toast;
+    	
+    	try {
+			Log.d("REST","Run Toggle");
+			
+			result = spark.sendOn();
+			
+			if (result == 0){
+				toast = Toast.makeText(getApplicationContext(), "Unsuccessful. Please Try Again.", duration);
+				toast.show();
+			}
+			else if (result == 1){
+				toast = Toast.makeText(getApplicationContext(), "Success!", duration);
+				toast.show();
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			toast = Toast.makeText(getApplicationContext(), "Error: Please Try Again", duration);
+			toast.show();
+			Log.d("REST",String.format("REST exception: %s",e));
+			e.printStackTrace();
+		}
+    	
+    }
+    private void throwOff(){
+    	int duration = Toast.LENGTH_SHORT;
+    	int result;
+    	Toast toast;
+    	
+    	try {
+			Log.d("REST","Run Toggle");
+			
+			result = spark.sendOff();
+			
+			if (result == 0){
+				toast = Toast.makeText(getApplicationContext(), "Unsuccessful. Please Try Again.", duration);
+				toast.show();
+			}
+			else if (result == 1){
+				toast = Toast.makeText(getApplicationContext(), "Success!", duration);
+				toast.show();
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			toast = Toast.makeText(getApplicationContext(), "Error: Please Try Again", duration);
+			toast.show();
+			Log.d("REST",String.format("REST exception: %s",e));
+			e.printStackTrace();
+		}
+    	
     }
 }

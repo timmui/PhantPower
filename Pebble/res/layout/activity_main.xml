@@ -2,10 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/actionbar_orange"
     android:clipToPadding="false"
-    android:fitsSystemWindows="true"
-    tools:context="com.getpebble.pebblekitexample.MainActivity" >
+    android:fitsSystemWindows="true" >
 
    <RelativeLayout
         android:layout_width="fill_parent"
@@ -20,8 +18,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:text="Press a button on Pebble"
-            android:textColor="#AAAAAA"
-            android:textSize="25sp" />
+            android:textColor="#000"
+            android:textSize="20sp" />
         
         <TextView
             android:id="@+id/textViewBatteryInfo"
@@ -31,8 +29,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:text="None yet"
-            android:textColor="#AAAAAA"
-            android:textSize="30sp" />
+            android:textColor="#000"
+            android:textSize="10sp" />
         
         <Button
             android:id="@+id/button_install"
@@ -41,23 +39,35 @@
             android:layout_below="@id/textViewBatteryInfo"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:background="@color/actionbar_orange"
+            android:background="#F47000"
             android:text="Don't Have Pebble App"
             android:textColor="#FFFFFF" />
+        
+        <TextView
+            android:id="@+id/ui"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/button_install"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Min Charge %   Max Charge %"
+            android:textColor="#000"
+            android:textSize="20sp" 
+            android:layout_centerHorizontal="true"/>
         
         <NumberPicker
 	        android:id="@+id/numPick"
 	        android:layout_width="180dp"
 	        android:layout_height="wrap_content"
 	        android:layout_marginRight="10dp"
-	        android:layout_below="@id/button_install"
+	        android:layout_below="@id/ui"
 	        android:layout_alignParentLeft="true"  />
         
         <NumberPicker
 	        android:id="@+id/numPick1"
 	        android:layout_width="200dp"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@id/button_install"
+	        android:layout_below="@id/ui"
 	        android:layout_toRightOf="@id/numPick"
 	        android:layout_alignParentRight="true"  />
         
@@ -68,7 +78,7 @@
             android:layout_below="@id/numPick"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:background="@color/actionbar_orange"
+            android:background="#F47000"
             android:text="Confirm"
             android:textColor="#FFFFFF" />
         
@@ -80,8 +90,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:text="None yet"
-            android:textColor="#AAAAAA"
-            android:textSize="30sp" />
+            android:textColor="#000"
+            android:textSize="20sp" 
+            android:layout_centerHorizontal="true"/>
         
 
     </RelativeLayout>
